@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@Service()
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    UserDao userDAO;
+    private final UserDao userDAO;
 
     @Autowired
     public UserDetailsServiceImpl(UserDao userDAO) {
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String s) {
         User user = userDAO.findByUsername(s);
         if(user == null){
             throw new UsernameNotFoundException("user not found");

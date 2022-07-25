@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping()
+@RequestMapping("admin/")
 public class AdminController {
 
     private final UserService userService;
@@ -26,19 +26,19 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("admin")
+    @GetMapping()
     public String pageForAdmin(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
     }
 
-    @GetMapping("admin/new")
+    @GetMapping("new")
     public String pageCreateUser(User user, Model model) {
         model.addAttribute("listRoles",roleService.findAllRole());
         return "create";
     }
 
-    @PostMapping("admin/new")
+    @PostMapping("new")
     public String pageCreate(@RequestParam("role")ArrayList<Long> roles,
                              @ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
@@ -47,7 +47,7 @@ public class AdminController {
         }
         if (userService.findByUsername(user.getUsername()) != null) {
             bindingResult.addError(new FieldError("username", "username",
-                    String.format("User with name \"%s\" is already exist!", user.getUsername())));
+                    String.format("User with email \"%s\" is already exists!", user.getUsername())));
             return "create";
         }
         user.setRoles(roleService.findByIdRoles(roles));
@@ -55,20 +55,20 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("admin/delete/{id}")
+    @DeleteMapping("delete/{id}")
     public String pageDelete(@PathVariable("id") long id) {
         userService.deleteById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("admin/edit/{id}")
+    @GetMapping("edit/{id}")
     public String pageEditUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user",userService.getById(id));
         model.addAttribute("listRoles",roleService.findAllRole());
         return "edit";
     }
 
-    @PutMapping("admin/edit")
+    @PutMapping("edit")
     public String pageEdit(@RequestParam("role")ArrayList<Long> roles,
                            @Valid User user,
                            BindingResult bindingResult) {

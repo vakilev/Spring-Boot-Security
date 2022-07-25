@@ -28,10 +28,10 @@ public class User implements UserDetails {
     @Pattern(regexp = "([A-z0-9_.-]+)@([A-z0-9_.-]+).([A-z]{2,8})", message = "Enter correct email")
     private String email;
 
-    @NotEmpty(message = "Username cannot be empty")
-    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 latin characters")
-    @Column(unique = true)
-    private String username;
+//    @NotEmpty(message = "Username cannot be empty")
+//    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 latin characters")
+//    @Column(unique = true)
+//    private String username;
 
     @NotEmpty(message = "Password cannot be empty")
     @Size(min = 4, message = "Password should be greater then 4 symbols")
@@ -46,19 +46,19 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String surname, byte age, String email, String username, String password, Set<Role> roles) {
+    public User(String name, String surname, byte age, String email, /*String username,*/ String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.email = email;
-        this.username = username;
+        //this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -124,7 +124,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

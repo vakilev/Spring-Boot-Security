@@ -7,9 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Repository
 public interface UserDao extends JpaRepository<User,Long> {
-    @Query("SELECT u from User u join fetch u.roles where u.username = :username")
+    @Query("SELECT u from User u join fetch u.roles where u.email = :username")
     User findByUsername(@Param("username")String username);
 }
