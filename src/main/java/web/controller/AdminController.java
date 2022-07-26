@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("admin/")
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -32,13 +32,13 @@ public class AdminController {
         return "users";
     }
 
-    @GetMapping("new")
+    @GetMapping("/new")
     public String pageCreateUser(User user, Model model) {
         model.addAttribute("listRoles",roleService.findAllRole());
         return "create";
     }
 
-    @PostMapping("new")
+    @PostMapping("/new")
     public String pageCreate(@RequestParam("role")ArrayList<Long> roles,
                              @ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
@@ -55,20 +55,20 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String pageDelete(@PathVariable("id") long id) {
         userService.deleteById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("edit/{id}")
+    @GetMapping("/edit/{id}")
     public String pageEditUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user",userService.getById(id));
         model.addAttribute("listRoles",roleService.findAllRole());
         return "edit";
     }
 
-    @PutMapping("edit")
+    @PutMapping("/edit")
     public String pageEdit(@RequestParam("role")ArrayList<Long> roles,
                            @Valid User user,
                            BindingResult bindingResult) {
